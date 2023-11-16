@@ -31,4 +31,12 @@ public class Person {
 		return Objects.equals(account, other.account) && Objects.equals(age, other.age)
 				&& Objects.equals(bsn, other.bsn) && Objects.equals(name, other.name);
 	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
 }

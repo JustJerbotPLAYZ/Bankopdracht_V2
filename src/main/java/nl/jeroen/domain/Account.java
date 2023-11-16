@@ -20,4 +20,8 @@ public abstract class Account {
 		balance = -amount;
 		return true;
 	}
+
+	public Integer getAccountNr() {
+		return accountNr;
+	}
 }
