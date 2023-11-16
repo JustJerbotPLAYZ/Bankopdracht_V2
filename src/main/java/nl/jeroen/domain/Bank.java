@@ -2,8 +2,20 @@ package nl.jeroen.domain;
 
 import java.util.ArrayList;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "bank")
 public class Bank {
+	@ManyToOne
 	ArrayList<Account> accounts = new ArrayList<>();
+	
+	@Id
+	@Column(name = "name")
 	String name;
 
 	public Bank(String name) {
