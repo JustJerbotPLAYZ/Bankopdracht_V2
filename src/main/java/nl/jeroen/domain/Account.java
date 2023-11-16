@@ -24,4 +24,9 @@ public abstract class Account {
 	public Integer getAccountNr() {
 		return accountNr;
 	}
+
+	@Override
+	public String toString() {
+		return accountNr.toString();
+	}
 }

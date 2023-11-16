@@ -29,11 +29,12 @@ public class Bank {
 	public boolean registerAccount(Person person, String type) {
 		if (type.toLowerCase().equals("credit"))
 			person.setAccount(new CreditAccount());
-		else if (type.toLowerCase().equals("Bank"))
+		else if (type.toLowerCase().equals("bank"))
 			person.setAccount(new BankAccount());
 		if (person.getAccount().equals(null))
 			return false;
 		accounts.add(person.getAccount());
 		return true;
 	}
+
 }
