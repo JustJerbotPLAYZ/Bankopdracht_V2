@@ -27,7 +27,6 @@ public class Bank {
 	}
 
 	public boolean registerAccount(Person person, String type) {
-		Account acc;
 		if (type.toLowerCase().equals("credit"))
 			person.setAccount(new CreditAccount());
 		else if (type.toLowerCase().equals("Bank"))
