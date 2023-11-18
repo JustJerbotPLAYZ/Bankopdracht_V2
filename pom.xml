@@ -13,12 +13,11 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>6.4.0.CR1</version>
 		</dependency>
-		<!--
-		https://mvnrepository.com/artifact/org.hibernate.common/hibernate-commons-annotations -->
+		<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
 		<dependency>
-			<groupId>org.hibernate.common</groupId>
-			<artifactId>hibernate-commons-annotations</artifactId>
-			<version>6.0.6.Final</version>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<version>8.2.0</version>
 		</dependency>
 	</dependencies>
 </project>
