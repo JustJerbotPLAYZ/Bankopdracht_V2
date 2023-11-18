@@ -19,8 +19,12 @@ public class Bank {
 	@OneToMany(mappedBy = "bank")
 	private SortedSet<Account> accounts = new TreeSet<Account>();
 
-	public Bank(String name) {
+	@Column(name = "accountIdentifier")
+	private String accountIdentifier;
+
+	public Bank(String name, String identifier) {
 		this.name = name;
+		this.accountIdentifier = identifier;
 	}
 
 	public boolean transfer(int fromAccountNr, int toAccountNr, double amount) {
@@ -40,32 +44,23 @@ public class Bank {
 	}
 
 	public boolean registerAccount(Person person, String type) {
+		for(Account acc: accounts)
+			if(acc.getAccountHolder().equals(person)&&acc.getClass().equals(type))
+				return false;
 		Account newAccount;
 		if (type.equalsIgnoreCase("credit")) {
-			newAccount = new CreditAccount();
+			newAccount = new CreditAccount(this, person);
 		} else if (type.equalsIgnoreCase("bank")) {
-			newAccount = new BankAccount();
-		} else if (type.equalsIgnoreCase("account")) {
-			newAccount = new Account();
+			newAccount = new BankAccount(this, person);
 		} else {
 			return false;
 		}
-
-		newAccount.setBank(this);
-		person.setAccount(newAccount);
 		accounts.add(newAccount);
 		newAccount.save();
+		person.getAccounts().add(newAccount);
 		this.save();
 
 		return true;
-	}
-
-	public void save() {
-		DAOFactory.getFactory().getBankDAO().save(this);
-	}
-
-	public void delete() {
-		DAOFactory.getFactory().getBankDAO().delete(this);
 	}
 
 	public SortedSet<Account> getAccounts() {
@@ -84,5 +79,25 @@ public class Bank {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/*
+	 * Hibernate methods
+	 */
+
+	public void save() {
+		DAOFactory.getFactory().getBankDAO().save(this);
+	}
+
+	public void delete() {
+		DAOFactory.getFactory().getBankDAO().delete(this);
+	}
+
+	public void load() {
+		DAOFactory.getFactory().getBankDAO().load(this);
+	}
+
+	public String getAccountIdentifier() {
+		return accountIdentifier;
 	}
 }

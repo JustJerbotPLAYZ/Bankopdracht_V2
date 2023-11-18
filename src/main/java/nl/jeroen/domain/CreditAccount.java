@@ -23,8 +23,8 @@ public class CreditAccount extends Account {
 	@Transient
 	private Random r = new Random();
 	
-	public CreditAccount() {
-		
+	public CreditAccount(Bank bank, Person person) {
+		super(bank, person);
 	}
 	
 	public void payCredit() {

@@ -15,26 +15,28 @@ import nl.jeroen.domain.persistence.factories.DAOFactory;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "accounttype")
-public class Account implements Comparable<Account>{
-	
-    @Id
-    @Column(name = "accountNr", unique = true)
-    protected Integer accountNr;
+public class Account implements Comparable<Account> {
 
-    @Column(name = "balance")
-    protected double balance = 0;
+	@Id
+	@Column(name = "accountNr", unique = true)
+	protected String accountNr;
 
-    @ManyToOne
-    @JoinColumn(name = "bankname")
-    private Bank bank;
-    
-	@OneToOne(mappedBy = "account")
-    private Person accountHolder;
+	@Column(name = "balance")
+	protected double balance = 0;
+
+	@ManyToOne
+	@JoinColumn(name = "bankname")
+	private Bank bank;
+
+	@ManyToOne
+	private Person accountHolder;
 
 	public static int nextAccountNr = 1000;
 
-	public Account() {
-		accountNr = nextAccountNr;
+	public Account(Bank bank, Person person) {
+		this.bank = bank;
+		accountHolder = person;
+		accountNr = bank.getAccountIdentifier() + nextAccountNr;
 		nextAccountNr++;
 	}
 
@@ -48,21 +50,13 @@ public class Account implements Comparable<Account>{
 		balance = -amount;
 		return true;
 	}
-	
+
 	@Override
 	public int compareTo(Account otherAccount) {
 		return this.getAccountNr().compareTo(otherAccount.getAccountNr());
 	}
-	
-	public void save() {
-		DAOFactory.getFactory().getAccountDAO().save(this);
-	}
-	
-	public void delete() {
-		DAOFactory.getFactory().getAccountDAO().delete(this);
-	}
 
-	public Integer getAccountNr() {
+	public String getAccountNr() {
 		return accountNr;
 	}
 
@@ -85,5 +79,21 @@ public class Account implements Comparable<Account>{
 
 	public void setAccountHolder(Person accountHolder) {
 		this.accountHolder = accountHolder;
+	}
+
+	/*
+	 * Hibernate methods
+	 */
+
+	public void save() {
+		DAOFactory.getFactory().getAccountDAO().save(this);
+	}
+
+	public void delete() {
+		DAOFactory.getFactory().getAccountDAO().delete(this);
+	}
+
+	public void load() {
+		DAOFactory.getFactory().getAccountDAO().load(this);
 	}
 }

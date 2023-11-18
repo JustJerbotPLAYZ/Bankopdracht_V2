@@ -1,10 +1,13 @@
 package nl.jeroen.domain;
 
 import java.util.Objects;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
@@ -24,22 +27,14 @@ public class Person {
 	@Column(name = "age")
 	private Integer age;
 
-	@OneToOne
 	@PrimaryKeyJoinColumn(name = "person")
-	private Account account;
+	@OneToMany(mappedBy = "accountHolder")
+	private SortedSet<Account> accounts = new TreeSet<Account>();
 
 	public Person(String name, String bsn, Integer age) {
 		this.bsn = bsn;
 		this.name = name;
 		this.age = age;
-	}
-	
-	public void save() {
-		DAOFactory.getFactory().getPersonDAO().save(this);
-	}
-	
-	public void delete() {
-		DAOFactory.getFactory().getPersonDAO().delete(this);
 	}
 
 	@Override
@@ -56,15 +51,31 @@ public class Person {
 		if (getClass() != obj.getClass())
 			return false;
 		Person other = (Person) obj;
-		return Objects.equals(account, other.account) && Objects.equals(age, other.age)
+		return Objects.equals(accounts, other.accounts) && Objects.equals(age, other.age)
 				&& Objects.equals(bsn, other.bsn) && Objects.equals(name, other.name);
 	}
 
-	public Account getAccount() {
-		return account;
+	public SortedSet<Account> getAccounts() {
+		return accounts;
 	}
 
-	public void setAccount(Account account) {
-		this.account = account;
+	public void setAccounts(SortedSet<Account> accounts) {
+		this.accounts = accounts;
+	}
+	
+	/*
+	 * Hibernate methods
+	 */
+
+	public void save() {
+		DAOFactory.getFactory().getPersonDAO().save(this);
+	}
+
+	public void delete() {
+		DAOFactory.getFactory().getPersonDAO().delete(this);
+	}
+
+	public void load() {
+		DAOFactory.getFactory().getPersonDAO().load(this);
 	}
 }

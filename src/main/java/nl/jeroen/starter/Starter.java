@@ -16,13 +16,13 @@ public class Starter {
 		Transaction trans = session.beginTransaction();
 		
 		
-		Bank ABN = new Bank("ABN Amro");
+		Bank ABN = new Bank("ABN Amro", "ABNA");
 		ABN.save();
 		Person jeroen = new Person("Johannes Daniël Suurmond","JSUU1203732849",18);
 		jeroen.save();
 		
-		ABN.registerAccount(jeroen, "bank");
-		System.out.println(jeroen.getAccount());
+		ABN.registerAccount(jeroen, "credit");
+		System.out.println(jeroen.getAccounts());
 		
 	    trans.commit();
 	    session.close();
