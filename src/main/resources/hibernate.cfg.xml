@@ -5,5 +5,6 @@
 
 <hibernate-configuration>
 	<session-factory>
+		<mapping class="nl.jeroen.domain.Bank" />
 	</session-factory>
 </hibernate-configuration>

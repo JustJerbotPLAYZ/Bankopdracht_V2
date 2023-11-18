@@ -1,22 +1,24 @@
 package nl.jeroen.domain;
 
-import java.util.ArrayList;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "bank")
 public class Bank {
-	@ManyToOne
-	ArrayList<Account> accounts = new ArrayList<>();
 	
 	@Id
-	@Column(name = "name")
-	String name;
+	@Column(name = "Bankname")
+	private String name;
+	
+	@OneToMany
+	private SortedSet<Account> accounts;
 
 	public Bank(String name) {
 		this.name = name;
@@ -47,6 +49,24 @@ public class Bank {
 			return false;
 		accounts.add(person.getAccount());
 		return true;
+	}
+
+	public SortedSet<Account> getAccounts() {
+		if(accounts.equals(null))
+			accounts = new TreeSet<>();
+		return accounts;
+	}
+
+	public void setAccounts(SortedSet<Account> accounts) {
+		this.accounts = accounts;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }
