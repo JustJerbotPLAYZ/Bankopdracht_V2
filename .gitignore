@@ -5,3 +5,4 @@
 .settings/org.eclipse.m2e.core.prefs
 target/classes/META-INF/MANIFEST.MF
 /target/
+src/main/resources/hibernate.properties
