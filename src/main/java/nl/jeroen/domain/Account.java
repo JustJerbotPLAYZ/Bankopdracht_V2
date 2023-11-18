@@ -1,15 +1,20 @@
 package nl.jeroen.domain;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.OneToOne;
 import nl.jeroen.domain.persistence.factories.DAOFactory;
 
 @Entity
-@Table(name = "accounts")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "accounttype")
 public class Account implements Comparable<Account>{
 	
     @Id
@@ -22,6 +27,9 @@ public class Account implements Comparable<Account>{
     @ManyToOne
     @JoinColumn(name = "bankname")
     private Bank bank;
+    
+	@OneToOne(mappedBy = "account")
+    private Person accountHolder;
 
 	public static int nextAccountNr = 1000;
 
@@ -69,5 +77,13 @@ public class Account implements Comparable<Account>{
 
 	public void setBank(Bank bank) {
 		this.bank = bank;
+	}
+
+	public Person getAccountHolder() {
+		return accountHolder;
+	}
+
+	public void setAccountHolder(Person accountHolder) {
+		this.accountHolder = accountHolder;
 	}
 }

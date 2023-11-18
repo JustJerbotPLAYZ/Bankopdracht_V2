@@ -17,10 +17,11 @@ public class Starter {
 		
 		
 		Bank ABN = new Bank("ABN Amro");
-		Person jeroen = new Person("Johannes Daniël Suurmond","",18);
+		ABN.save();
+		Person jeroen = new Person("Johannes Daniël Suurmond","JSUU1203732849",18);
+		jeroen.save();
 		
 		ABN.registerAccount(jeroen, "bank");
-		System.out.println(jeroen.getAccount());
 		System.out.println(jeroen.getAccount());
 		
 	    trans.commit();

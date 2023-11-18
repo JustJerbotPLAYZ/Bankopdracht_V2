@@ -9,4 +9,9 @@ public class BankAccount extends Account {
 	public BankAccount() {
 		
 	}
+	
+	@Override
+	public String toString() {
+		return "bank";
+	}
 }

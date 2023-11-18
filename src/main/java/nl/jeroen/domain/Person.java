@@ -2,16 +2,44 @@ package nl.jeroen.domain;
 
 import java.util.Objects;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.Table;
+import nl.jeroen.domain.persistence.factories.DAOFactory;
+
+@Entity
+@Table(name = "person")
 public class Person {
-	private String name;
-	private Integer age;
-	private String bsn;
-	private Account account;
 	
-	public Person(String bsn, String name, Integer age) {
+	@Id
+	@Column(name = "bsn")
+	private String bsn;
+	
+	@Column(name = "name")
+	private String name;
+	
+	@Column(name = "age")
+	private Integer age;
+
+	@OneToOne
+	@PrimaryKeyJoinColumn(name = "person")
+	private Account account;
+
+	public Person(String name, String bsn, Integer age) {
 		this.bsn = bsn;
 		this.name = name;
 		this.age = age;
+	}
+	
+	public void save() {
+		DAOFactory.getFactory().getPersonDAO().save(this);
+	}
+	
+	public void delete() {
+		DAOFactory.getFactory().getPersonDAO().delete(this);
 	}
 
 	@Override
