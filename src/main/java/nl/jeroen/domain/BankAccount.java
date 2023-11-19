@@ -6,12 +6,12 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "bankaccount")
 public class BankAccount extends Account {
-	public BankAccount(Bank bank, Person person) {
-		super(bank, person);
+	
+	public BankAccount() {
+		
 	}
 	
-	@Override
-	public String toString() {
-		return "bank";
+	public BankAccount(Bank bank, Person person) {
+		super(bank, person);
 	}
 }

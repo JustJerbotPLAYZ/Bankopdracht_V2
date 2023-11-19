@@ -18,7 +18,7 @@ import nl.jeroen.domain.persistence.factories.DAOFactory;
 public class Person {
 	
 	@Id
-	@Column(name = "bsn")
+	@Column(name = "bsn", unique = true)
 	private String bsn;
 	
 	@Column(name = "name")

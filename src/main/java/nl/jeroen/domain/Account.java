@@ -13,7 +13,7 @@ import jakarta.persistence.OneToOne;
 import nl.jeroen.domain.persistence.factories.DAOFactory;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "accounttype")
 public class Account implements Comparable<Account> {
 
@@ -30,14 +30,16 @@ public class Account implements Comparable<Account> {
 
 	@ManyToOne
 	private Person accountHolder;
-
-	public static int nextAccountNr = 1000;
+	
+	public Account() {
+		
+	}
 
 	public Account(Bank bank, Person person) {
 		this.bank = bank;
 		accountHolder = person;
-		accountNr = bank.getAccountIdentifier() + nextAccountNr;
-		nextAccountNr++;
+		accountNr = bank.getAccountIdentifier() + bank.getNextAccountNr();
+		bank.setNextAccountNr(bank.getNextAccountNr()+1);
 	}
 
 	public void deposit(double amount) {

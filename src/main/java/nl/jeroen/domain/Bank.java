@@ -22,12 +22,15 @@ public class Bank {
 	@Column(name = "accountIdentifier")
 	private String accountIdentifier;
 
+	@Column(name = "nextAccountNr")
+	private int nextAccountNr = 1000;
+
 	public Bank(String name, String identifier) {
 		this.name = name;
 		this.accountIdentifier = identifier;
 	}
 
-	public boolean transfer(int fromAccountNr, int toAccountNr, double amount) {
+	public boolean transfer(String fromAccountNr, String toAccountNr, double amount) {
 		if (getAccountByNr(fromAccountNr).withdraw(amount))
 			getAccountByNr(toAccountNr).deposit(amount);
 		else
@@ -35,7 +38,7 @@ public class Bank {
 		return true;
 	}
 
-	private Account getAccountByNr(int accountNr) {
+	private Account getAccountByNr(String accountNr) {
 		for (Account acc : accounts) {
 			if (acc.getAccountNr().equals(accountNr))
 				return acc;
@@ -44,8 +47,8 @@ public class Bank {
 	}
 
 	public boolean registerAccount(Person person, String type) {
-		for(Account acc: accounts)
-			if(acc.getAccountHolder().equals(person)&&acc.getClass().equals(type))
+		for (Account acc : accounts)
+			if (acc.getAccountHolder().equals(person) && acc.toString().equals(type))
 				return false;
 		Account newAccount;
 		if (type.equalsIgnoreCase("credit")) {
@@ -59,7 +62,7 @@ public class Bank {
 		newAccount.save();
 		person.getAccounts().add(newAccount);
 		this.save();
-
+		System.out.println(type + "account created");
 		return true;
 	}
 
@@ -73,12 +76,32 @@ public class Bank {
 		this.accounts = accounts;
 	}
 
+	public void setAccounts(TreeSet<Account> accounts) {
+		this.accounts = accounts;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getNextAccountNr() {
+		return nextAccountNr;
+	}
+
+	public void setNextAccountNr(int nextAccountNr) {
+		this.nextAccountNr = nextAccountNr;
+	}
+
+	public String getAccountIdentifier() {
+		return accountIdentifier;
+	}
+
+	public void setAccountIdentifier(String accountIdentifier) {
+		this.accountIdentifier = accountIdentifier;
 	}
 
 	/*
@@ -95,9 +118,5 @@ public class Bank {
 
 	public void load() {
 		DAOFactory.getFactory().getBankDAO().load(this);
-	}
-
-	public String getAccountIdentifier() {
-		return accountIdentifier;
 	}
 }
