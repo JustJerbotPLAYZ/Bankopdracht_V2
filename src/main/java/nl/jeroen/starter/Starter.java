@@ -15,34 +15,29 @@ import nl.jeroen.utils.HibernateSessionManager;
 public class Starter {
 	public static void main(String[] args) {
 		DAOFactory.setFactory(DAOFactories.HIBERNATE.getTheFactory());
-	    Session session = HibernateSessionManager.getSessionFactory().getCurrentSession();
+		Session session = HibernateSessionManager.getSessionFactory().getCurrentSession();
 		Transaction trans = session.beginTransaction();
-		
-		
+
 		Bank ABN = new Bank("ABN Amro", "ABNA");
-		Person jeroen = new Person("Jeroen Suurmond","JSUU1203732849",18);
-		jeroen.load();
-		ABN.load();
-		
-		ABN.registerAccount(jeroen, "bank");
-		ABN.registerAccount(jeroen, "bank");
-		ABN.registerAccount(jeroen, "bank");
-		ABN.registerAccount(jeroen, "bank");
-		ABN.registerAccount(jeroen, "bank");
-		ABN.registerAccount(jeroen, "bank");
-		ABN.registerAccount(jeroen, "bank");
-		ABN.registerAccount(jeroen, "bank");
-		ABN.registerAccount(jeroen, "bank");
-		ABN.registerAccount(jeroen, "bank");
-		ABN.registerAccount(jeroen, "bank");
-		ABN.registerAccount(jeroen, "bank");
-		ABN.registerAccount(jeroen, "bank");
-		
-		
-		
+		Person jeroen = new Person("Jeroen Suurmond", "JSUU1203732849", 18);
+
+		ABN.registerAccount(jeroen, "credit");
+		ABN.registerAccount(jeroen, "credit");
+		ABN.registerAccount(jeroen, "credit");
+		ABN.registerAccount(jeroen, "credit");
+		ABN.registerAccount(jeroen, "credit");
+		ABN.registerAccount(jeroen, "credit");
+		ABN.registerAccount(jeroen, "credit");
+		ABN.registerAccount(jeroen, "credit");
+		ABN.registerAccount(jeroen, "credit");
+		ABN.registerAccount(jeroen, "credit");
+		ABN.registerAccount(jeroen, "credit");
+		ABN.registerAccount(jeroen, "credit");
+		ABN.registerAccount(jeroen, "credit");
+
 		jeroen.save();
 		ABN.save();
-	    trans.commit();
-	    session.close();
+		trans.commit();
+		session.close();
 	}
 }

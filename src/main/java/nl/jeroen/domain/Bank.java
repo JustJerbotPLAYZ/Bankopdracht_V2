@@ -47,17 +47,20 @@ public class Bank {
 	}
 
 	public boolean registerAccount(Person person, String type) {
-		for (Account acc : accounts)
-			if (acc.getAccountHolder().equals(person) && acc.toString().equals(type))
-				return false;
 		Account newAccount;
-		if (type.equalsIgnoreCase("credit")) {
-			newAccount = new CreditAccount(this, person);
-		} else if (type.equalsIgnoreCase("bank")) {
+		switch (type.toLowerCase()) {
+		case "bank":
 			newAccount = new BankAccount(this, person);
-		} else {
+			break;
+		case "credit":
+			newAccount = new BankAccount(this, person);
+			break;
+		default:
 			return false;
 		}
+		for (Account acc : accounts)
+			if (person.equals(acc.getAccountHolder()) && newAccount.getClass().equals(acc.getClass()))
+				return false;
 		accounts.add(newAccount);
 		newAccount.save();
 		person.getAccounts().add(newAccount);
