@@ -50,10 +50,12 @@ public class Bank {
 		Account newAccount;
 		switch (type.toLowerCase()) {
 		case "bank":
-			newAccount = new BankAccount(this, person);
+			BankAccount temp = new BankAccount(this, person);
+			newAccount = temp;
 			break;
 		case "credit":
-			newAccount = new BankAccount(this, person);
+			CreditAccount temp1 = new CreditAccount(this, person);
+			newAccount = temp1;
 			break;
 		default:
 			return false;
@@ -61,6 +63,7 @@ public class Bank {
 		for (Account acc : accounts)
 			if (person.equals(acc.getAccountHolder()) && newAccount.getClass().equals(acc.getClass()))
 				return false;
+		newAccount.assignAccountNr();
 		accounts.add(newAccount);
 		newAccount.save();
 		person.getAccounts().add(newAccount);

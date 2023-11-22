@@ -38,8 +38,6 @@ public class Account implements Comparable<Account> {
 	public Account(Bank bank, Person person) {
 		this.bank = bank;
 		accountHolder = person;
-		accountNr = bank.getAccountIdentifier() + bank.getNextAccountNr();
-		bank.setNextAccountNr(bank.getNextAccountNr()+1);
 	}
 
 	public void deposit(double amount) {
@@ -51,6 +49,11 @@ public class Account implements Comparable<Account> {
 			return false;
 		balance = -amount;
 		return true;
+	}
+	
+	public void assignAccountNr() {
+		accountNr = bank.getAccountIdentifier() + bank.getNextAccountNr();
+		bank.setNextAccountNr(bank.getNextAccountNr()+1);
 	}
 
 	@Override

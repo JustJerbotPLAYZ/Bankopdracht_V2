@@ -20,21 +20,13 @@ public class Starter {
 
 		Bank ABN = new Bank("ABN Amro", "ABNA");
 		Person jeroen = new Person("Jeroen Suurmond", "JSUU1203732849", 18);
-
+		
+		jeroen.load();
+		ABN.load();
+		
+		ABN.registerAccount(jeroen, "bank");
 		ABN.registerAccount(jeroen, "credit");
-		ABN.registerAccount(jeroen, "credit");
-		ABN.registerAccount(jeroen, "credit");
-		ABN.registerAccount(jeroen, "credit");
-		ABN.registerAccount(jeroen, "credit");
-		ABN.registerAccount(jeroen, "credit");
-		ABN.registerAccount(jeroen, "credit");
-		ABN.registerAccount(jeroen, "credit");
-		ABN.registerAccount(jeroen, "credit");
-		ABN.registerAccount(jeroen, "credit");
-		ABN.registerAccount(jeroen, "credit");
-		ABN.registerAccount(jeroen, "credit");
-		ABN.registerAccount(jeroen, "credit");
-
+		
 		jeroen.save();
 		ABN.save();
 		trans.commit();
