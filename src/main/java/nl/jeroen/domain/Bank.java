@@ -65,9 +65,9 @@ public class Bank {
 				return false;
 		newAccount.assignAccountNr();
 		accounts.add(newAccount);
-		newAccount.save();
 		person.getAccounts().add(newAccount);
 		this.save();
+		newAccount.save();
 		System.out.println(type + "account created");
 		return true;
 	}

@@ -1,11 +1,8 @@
 package nl.jeroen.starter;
 
-import java.util.TreeSet;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import nl.jeroen.domain.Account;
 import nl.jeroen.domain.Bank;
 import nl.jeroen.domain.Person;
 import nl.jeroen.domain.persistence.factories.DAOFactories;
@@ -20,9 +17,6 @@ public class Starter {
 
 		Bank ABN = new Bank("ABN Amro", "ABNA");
 		Person jeroen = new Person("Jeroen Suurmond", "JSUU1203732849", 18);
-		
-		jeroen.load();
-		ABN.load();
 		
 		ABN.registerAccount(jeroen, "bank");
 		ABN.registerAccount(jeroen, "credit");
